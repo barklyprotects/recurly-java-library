@@ -119,7 +119,7 @@ public class RecurlyClient {
      * generate debug output
      */
     private static boolean debug() {
-        return true;
+        return Boolean.getBoolean(RECURLY_DEBUG_KEY);
     }
 
     // TODO: should we make it static?
@@ -1612,9 +1612,6 @@ public class RecurlyClient {
     }
 
     private void doDELETE(final String resource) {
-        if (debug()) {
-            log.info("Msg to Recurly API [DELETE]:: URL : {}", baseUrl + resource);
-        }
         callRecurlySafeXmlContent(client.prepareDelete(baseUrl + resource), null);
     }
 
@@ -1674,11 +1671,7 @@ public class RecurlyClient {
         try {
             final String payload = convertStreamToString(in);
             if (debug()) {
-                log.info("API Limit Remaining:{}", response.getHeader("X-RateLimit-Remaining"));
-                log.info("Reset Limit:{}", response.getHeader("X-RateLimit-Reset"));
-                log.info("Rate Limit:{}", response.getHeader("X-RateLimit-Limit"));
-
-                //log.info("Msg from Recurly API :: {}", payload);
+                log.info("Msg from Recurly API :: {}", payload);
             }
 
             // Handle errors payload
