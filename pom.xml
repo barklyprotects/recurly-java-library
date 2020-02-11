@@ -66,9 +66,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.version>2.5.0</jackson.version>
         <guava.version>18.0</guava.version>
-        <maven.compiler.source>13</maven.compiler.source>
-        <maven.compiler.target>13</maven.compiler.target>
-        <maven.javadoc.source>13</maven.javadoc.source>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
         <maven.surefire.source>3.0.0-M4</maven.surefire.source>
     </properties>
     <dependencies>
@@ -194,7 +195,7 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <release>13</release>
+                    <release>${maven.compiler.release}</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -310,13 +311,13 @@
                       | Apple's JVM sometimes requires more memory
                     -->
                     <additionalJOption>-J-Xmx1024m</additionalJOption>
-                    <source>13</source>
+                    <source>${java.version}</source>
                     <encoding>UTF-8</encoding>
                     <maxmemory>2g</maxmemory>
                     <links>
                         <link>http://commons.apache.org/dbcp/apidocs/</link>
                         <link>http://commons.apache.org/fileupload/apidocs/</link>
-                        <link>https://docs.oracle.com/en/java/javase/13/docs/api/</link>
+                        <link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>
                     </links>
                     <linksource>true</linksource>
                     <show>public</show>
