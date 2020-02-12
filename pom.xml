@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2010-2014 Ning, Inc.
+  ~ Copyright 2010-2014 Ning, Inc.maven.compiler.source
   ~ Copyright 2014-2015 The Billing Project, LLC
   ~
   ~ The Billing Project licenses this file to you under the Apache License, version 2.0
@@ -66,11 +66,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.version>2.5.0</jackson.version>
         <guava.version>18.0</guava.version>
-        <java.version>11</java.version>
+        <java.version>1.6</java.version>
+        <slf4j.version>1.7.10</slf4j.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-        <maven.surefire.source>3.0.0-M4</maven.surefire.source>
+        <maven.surefire.source>2.11</maven.surefire.source>
+        <!--<maven.surefire.source>3.0.0-M4</maven.surefire.source>-->
     </properties>
     <dependencies>
         <dependency>
@@ -117,8 +119,13 @@
         <dependency>
             <groupId>com.ning</groupId>
             <artifactId>async-http-client</artifactId>
-            <version>1.9.40</version>
+            <version>1.9.8</version>
         </dependency>
+        <!--<dependency>
+            <groupId>com.ning</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>1.9.40</version>
+        </dependency>-->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
@@ -126,27 +133,39 @@
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
             <version>1.7.30</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.1.0</version>
+            <version>6.8.21</version>
+            <!--<version>7.1.0</version>-->
             <scope>test</scope>
         </dependency>
         <!-- API -->
-        <dependency>
+        <!--<dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
             <version>2.3.2</version>
-        </dependency>
+        </dependency>-->
         <!-- Runtime -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
             <version>2.3.2</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
@@ -173,9 +192,12 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.basepom.maven</groupId>
+                <groupId>com.ning.maven.plugins</groupId>
+                <artifactId>maven-duplicate-finder-plugin</artifactId>
+                <version>1.0.3</version>
+                <!--<groupId>org.basepom.maven</groupId>
                 <artifactId>duplicate-finder-maven-plugin</artifactId>
-                <version>1.4.0</version>
+                <version>1.4.0</version>-->
                 <configuration>
                     <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
                 </configuration>
@@ -191,11 +213,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <!--<version>3.8.1</version>-->
+                <version>2.3.2</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <release>${maven.compiler.release}</release>
+                    <!--<release>${maven.compiler.release}</release>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -230,7 +253,8 @@
             <plugin>
                 <groupId>org.apache.rat</groupId>
                 <artifactId>apache-rat-plugin</artifactId>
-                <version>0.13</version>
+                <version>0.7</version>
+                <!--<version>0.13</version>-->
                 <executions>
                     <execution>
                         <phase>verify</phase>
@@ -305,19 +329,24 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>2.8</version>
+                <!--<version>3.1.1</version>-->
                 <configuration>
+                    <additionalparam>-quiet -Xdoclint:none</additionalparam>
                     <!--
                       | Apple's JVM sometimes requires more memory
                     -->
                     <additionalJOption>-J-Xmx1024m</additionalJOption>
-                    <source>${java.version}</source>
+                    <source>1.6</source>
+                    <!--<source>${java.version}</source>-->
                     <encoding>UTF-8</encoding>
                     <maxmemory>2g</maxmemory>
                     <links>
-                        <link>http://commons.apache.org/dbcp/apidocs/</link>
+                        <link>http://commons.apache.org/lang/api/</link>
+                        <link>http://download.oracle.com/javase/6/docs/api/</link>
+                        <!--<link>http://commons.apache.org/dbcp/apidocs/</link>
                         <link>http://commons.apache.org/fileupload/apidocs/</link>
-                        <link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>
+                        <link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>-->
                     </links>
                     <linksource>true</linksource>
                     <show>public</show>
@@ -356,7 +385,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
+                <!--<version>3.2.1</version>-->
+                <version>2.1.2</version>
                 <configuration>
                     <attach>true</attach>
                 </configuration>
@@ -374,7 +404,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.8.2</version>
+                <version>3.0</version>
+                <!--<version>3.8.2</version>-->
                 <configuration>
                     <chmod>true</chmod>
                     <inputEncoding>UTF-8</inputEncoding>
@@ -446,7 +477,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>${maven.surefire.source}</version>
+                <!--<version>${maven.surefire.source}</version>-->
+                <version>2.10</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
